@@ -1,0 +1,7 @@
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin # allows your shell to find go binaries
+export CGO_ENABLED=1 # required by go to build C based libraries
+export CC=/usr/bin/gcc # gcc installation is required for FDB
+export GOPRIVATE=github.com/bigbluedisco # Required for private dependancies
+export CGO_LDFLAGS="-Wl,-rpath,/usr/local/lib" # Required for fdb bug
+

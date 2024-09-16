@@ -1,0 +1,42 @@
+alias g='git status'
+alias editrc='nvim ~/.zshrc && source ~/.zshrc'
+
+# go
+alias gota='go test ./...'
+alias got='go test'
+alias gts='gotestsum --format dots'
+alias deploy='~/projects/just-deploy.sh'
+alias gen='go generate'
+
+alias jupyter-lab='jupyter-lab --app-dir /opt/homebrew/share/jupyter/lab'
+alias lint='current=$(pwd) && cd $(git rev-parse --show-toplevel) && golangci-lint run -c .golangci.yml && cd $current'
+alias ghw='gh pr view --web'
+alias mypr='gh pr list --author kiliandbigblue'
+
+alias go='grc go'
+
+function gdd() {
+ git diff --name-only HEAD "$1" | xargs -n1 dirname | sed 's/^/.\//' | sort -u
+}
+alias ghc='gh pr create --title $(git rev-parse --abbrev-ref HEAD) --web -a @me'
+
+alias gic='git commit -m $(git rev-parse --abbrev-ref HEAD)'
+
+alias gup='go get -u && go mod tidy'
+
+convert_svg() {
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Usage: convert_svg input.svg output.tsx"
+        return 1
+    fi
+
+    svgo "$1" --precision=1 && npx @svgr/cli --typescript -- "$1" > "$2"
+}
+
+alias vim=nvim
+alias vi=nvim
+
+alias ls="eza --icons=always"
+
+alias j='just --justfile ~/projects/cli/justfile'
+alias bj='~/go/bin/just'
