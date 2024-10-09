@@ -26,8 +26,40 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>s", [[:%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 vim.keymap.set("n", "<leader>b", ":cclose<CR>")
 
 vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
+
+-- vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz")
+-- vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
+
+function RpcToGoFunc()
+	-- Get the current line under the cursor
+	local rpc_line = vim.fn.getline(".")
+
+	-- Pattern to match the rpc declaration
+	local rpc_pattern = "rpc%s+(%w+)%((%w+)%)%s+returns%s+%((%w+)%)"
+
+	-- Extract function name, request type, and response type using Lua pattern matching
+	local func_name, request_type, response_type = string.match(rpc_line, rpc_pattern)
+
+	-- If matching was successful, construct the Go function signature
+	if func_name and request_type and response_type then
+		-- Prepare the Go function signature
+		local go_func = string.format(
+			"func (s *Service) %s(ctx context.Context, r *inventory.%s) (*inventory.%s, error) { return nil, nil }",
+			func_name,
+			request_type,
+			response_type
+		)
+
+		-- Replace the current line with the generated Go function signature
+		vim.fn.setline(".", go_func)
+	else
+		-- Notify user in case of pattern mismatch
+		print("Pattern match failed. Please ensure the line follows the RPC format.")
+	end
+end
+vim.api.nvim_create_user_command("RpcToGoFunc", RpcToGoFunc, {})

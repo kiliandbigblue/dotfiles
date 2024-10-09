@@ -24,24 +24,25 @@ return {
 				},
 			},
 			pickers = {
-				find_files = {
-					theme = "ivy",
-				},
-				lsp_references = {
-					theme = "ivy",
-				},
-				lsp_document_symbols = {
-					theme = "ivy",
-				},
-				lsp_incoming_calls = {
-					theme = "ivy",
-				},
-				live_grep = {
-					theme = "ivy",
-				},
-				grep_string = {
-					theme = "ivy",
-				},
+				-- theme = "ivy",
+				-- find_files = {
+				-- 	theme = "ivy",
+				-- },
+				-- lsp_references = {
+				-- 	theme = "ivy",
+				-- },
+				-- lsp_document_symbols = {
+				-- 	theme = "ivy",
+				-- },
+				-- lsp_incoming_calls = {
+				-- 	theme = "ivy",
+				-- },
+				-- live_grep = {
+				-- 	theme = "ivy",
+				-- },
+				-- grep_string = {
+				-- 	theme = "ivy",
+				-- },
 			},
 		})
 
@@ -53,15 +54,49 @@ return {
 
 		keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
 		keymap.set("n", "<leader>fr", "<cmd>Telescope lsp_references<cr>", { desc = "List all references" })
+		keymap.set("n", "<leader>fg", function()
+			require("telescope.builtin").live_grep({
+				glob_pattern = { "!*_test.go" },
+				type_filter = "go",
+				desc = "Find string in go files",
+			})
+		end, { noremap = true, silent = true })
 		keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-		keymap.set("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
+		keymap.set("n", "<leader>fh", function()
+			require("telescope").extensions.live_grep_args.live_grep_args()
+		end)
 		keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
 		keymap.set("n", "<leader>fb", "<cmd>Telescope lsp_incoming_calls<cr>", { desc = "List all incoming calls" })
-		keymap.set(
-			"n",
-			"<leader>fw",
-			"<cmd>Telescope lsp_document_symbols<cr>",
-			{ desc = "List all documents symbols" }
-		)
+		keymap.set("n", "<leader>fp", "<cmd>Telescope find_files<cr>", { desc = "List all incoming calls" })
+		keymap.set("n", "<leader>fw", function()
+			require("telescope.builtin").lsp_document_symbols({
+				desc = "List all documents symbols",
+			})
+		end)
+		keymap.set("n", "<leader>fp", function()
+			require("telescope.builtin").find_files({
+				search_dirs = { vim.loop.cwd() },
+				find_command = { "find", ".", "-type", "f", "-name", "*.proto" },
+			})
+		end, { noremap = true, silent = true })
+		keymap.set("n", "<leader>f;", function()
+			require("telescope.builtin").find_files({
+				search_dirs = { "~/projects/proto/" },
+				find_command = { "find", ".", "-type", "f", "-name", "*.proto" },
+			})
+		end, { noremap = true, silent = true })
+		keymap.set("n", "<leader>f:", function()
+			require("telescope.builtin").find_files({
+				search_dirs = { "~/projects/atlas/" },
+				find_command = { "find", ".", "-type", "f", "-name", "*.proto" },
+			})
+		end, { noremap = true, silent = true })
+		keymap.set("n", "<leader>fv", function()
+			require("telescope.builtin").find_files({
+				search_dirs = { "~/vault/" },
+				find_command = { "find", ".", "-type", "f", "-name", "*.md" },
+				desc = { "Open vault file" },
+			})
+		end, { noremap = true, silent = true })
 	end,
 }
