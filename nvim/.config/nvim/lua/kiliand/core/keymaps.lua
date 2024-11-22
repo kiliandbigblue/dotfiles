@@ -32,8 +32,10 @@ vim.keymap.set("n", "<leader>b", ":cclose<CR>")
 
 vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 
--- vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz")
--- vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<leader>gh", "<cmd>diffget //2<CR>")
+vim.keymap.set("n", "<leader>gl", "<cmd>diffget //3<CR>")
+
+vim.keymap.set("n", "<leader>tl", ":e ~/todo/todo.txt<CR>")
 
 function RpcToGoFunc()
 	-- Get the current line under the cursor
@@ -63,3 +65,8 @@ function RpcToGoFunc()
 	end
 end
 vim.api.nvim_create_user_command("RpcToGoFunc", RpcToGoFunc, {})
+
+function GithubPR()
+	vim.fn.system("gh pr view --web")
+end
+vim.api.nvim_create_user_command("GithubPR", GithubPR, {})

@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-	vim.cmd.colorscheme("dracula")
+	vim.cmd.colorscheme("tokyonight-moon")
 	vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
 
 	-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -53,6 +53,8 @@ return {
 					colors.fg_sidebar = fg_dark
 				end,
 			})
+
+			ColorMyPencils()
 		end,
 	},
 
@@ -176,7 +178,18 @@ return {
 				lualine_bg_color = "#44475a",
 				italic_comment = true,
 			})
+		end,
+	},
 
+	{
+		"oxfist/night-owl.nvim",
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- make sure to load this before all the other start plugins
+		config = function()
+			-- load the colorscheme here
+			require("night-owl").setup({
+				transparent_background = true,
+			})
 			ColorMyPencils()
 		end,
 	},

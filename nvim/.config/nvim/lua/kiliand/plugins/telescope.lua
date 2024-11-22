@@ -93,7 +93,7 @@ return {
 		end, { noremap = true, silent = true })
 		keymap.set("n", "<leader>fv", function()
 			require("telescope.builtin").find_files({
-				search_dirs = { "~/vault/" },
+				search_dirs = { "/Users/kiliandemeulemeester/Library/Mobile Documents/iCloud~md~obsidian/" },
 				find_command = { "find", ".", "-type", "f", "-name", "*.md" },
 				desc = { "Open vault file" },
 			})

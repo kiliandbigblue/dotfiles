@@ -40,6 +40,7 @@ return {
 				"markdown_inline",
 				"proto",
 				"query",
+				"todotxt",
 				"tsx",
 				"typescript",
 				"vim",
@@ -55,6 +56,12 @@ return {
 			-- 		node_decremental = "<bs>",
 			-- 	},
 			-- },
+			vim.filetype.add({
+				extension = {
+					["todo.txt"] = "todotxt",
+					["done.txt"] = "todotxt",
+				},
+			}),
 		})
 	end,
 }

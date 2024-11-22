@@ -1,0 +1,10 @@
+return {
+	"VonHeikemen/fine-cmdline.nvim",
+	dependencies = {
+		{ "MunifTanjim/nui.nvim" },
+	},
+
+	config = function()
+		vim.keymap.set("n", ":", "<cmd>FineCmdline<cr>", { noremap = true })
+	end,
+}

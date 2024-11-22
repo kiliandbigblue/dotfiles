@@ -137,3 +137,7 @@ export PATH="/Users/kiliandemeulemeester/.local/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+export OCTOMEAL_DB_DSN='postgres://octomeal:Octopa55word@localhost/octomeal?sslmode=disable'
+export PATH="/Users/kiliandemeulemeester/.cargo/bin:$PATH"

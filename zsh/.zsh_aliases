@@ -40,3 +40,7 @@ alias ls="eza --icons=always"
 
 alias j='just --justfile ~/projects/cli/justfile'
 alias bj='~/go/bin/just'
+
+alias t='todo.sh'
+alias tl='todo.sh ls'
+alias ta='todo.sh add'
