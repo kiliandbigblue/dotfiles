@@ -9,7 +9,7 @@ return {
 		lualine.setup({
 			options = {
 				--[[ theme = "auto", ]]
-				theme = "dracula-nvim",
+				theme = "nord",
 			},
 			sections = {
 				lualine_c = {

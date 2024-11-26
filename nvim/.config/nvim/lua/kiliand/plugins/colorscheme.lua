@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-	vim.cmd.colorscheme("tokyonight-moon")
+	vim.cmd.colorscheme("nord")
 	vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
 
 	-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -189,6 +189,18 @@ return {
 			-- load the colorscheme here
 			require("night-owl").setup({
 				transparent_background = true,
+			})
+			ColorMyPencils()
+		end,
+	},
+
+	{
+		"gbprod/nord.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("nord").setup({
+				transparent = true,
 			})
 			ColorMyPencils()
 		end,

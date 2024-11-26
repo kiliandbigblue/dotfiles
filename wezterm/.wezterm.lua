@@ -20,7 +20,7 @@ config.macos_window_background_blur = 10
 
 -- config.color_scheme_dirs = { ".config/wezterm/" }
 -- config.color_scheme = "Catppuccin Mocha"
-config.color_scheme = "Tokyo Night Moon"
+config.color_scheme = "Nord (base16)"
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 config.window_decorations = "RESIZE"
