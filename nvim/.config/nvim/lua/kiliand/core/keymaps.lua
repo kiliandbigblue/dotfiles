@@ -37,6 +37,11 @@ vim.keymap.set("n", "<leader>gl", "<cmd>diffget //3<CR>")
 
 vim.keymap.set("n", "<leader>tl", ":e ~/todo/todo.txt<CR>")
 
+vim.keymap.set("n", "[d", "[dzz")
+vim.keymap.set("n", "]d", "dzz")
+vim.keymap.set("n", "[q", ":cprevious<CR>zz")
+vim.keymap.set("n", "]q", ":cnext<CR>zz")
+
 function RpcToGoFunc()
 	-- Get the current line under the cursor
 	local rpc_line = vim.fn.getline(".")
