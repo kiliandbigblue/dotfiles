@@ -9,18 +9,16 @@ local config = wezterm.config_builder()
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono")
 -- config.font = wezterm.font("MesloLGS Nerd Font Mono")
 
-config.font_size = 17
+config.font_size = 18
 
 config.enable_tab_bar = false
 
 config.window_decorations = "RESIZE"
 
-config.window_background_opacity = 1
+config.window_background_opacity = 0.95
 config.macos_window_background_blur = 10
 
--- config.color_scheme_dirs = { ".config/wezterm/" }
--- config.color_scheme = "Catppuccin Mocha"
-config.color_scheme = "Nord (base16)"
+config.color_scheme = "rose-pine"
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 config.window_decorations = "RESIZE"

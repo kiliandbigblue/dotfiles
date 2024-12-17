@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-	vim.cmd.colorscheme("nord")
+	vim.cmd.colorscheme("rose-pine-moon")
 	vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
 
 	-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -7,8 +7,8 @@ function ColorMyPencils(color)
 	-- vim.api.nvim_set_hl(0, "Visual", { bg = "#275378" })
 	-- vim.api.nvim_set_hl(0, "VisualFloat", { bg = "#275378" })
 	-- --
-	-- -- Set the line number color to gold from rose-pine theme
-	-- vim.api.nvim_set_hl(0, "LineNr", { fg = "#D4A6A6" }) -- gold color from rose-pine theme
+	-- Set the line number color to gold from rose-pine theme
+	vim.api.nvim_set_hl(0, "LineNr", { fg = "#D4A6A6" }) -- gold color from rose-pine theme
 end
 
 return {
@@ -201,6 +201,22 @@ return {
 		config = function()
 			require("nord").setup({
 				transparent = true,
+				terminal_colors = true,
+			})
+			ColorMyPencils()
+		end,
+	},
+
+	{
+		"projekt0n/github-nvim-theme",
+		name = "github-theme",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("github-theme").setup({
+				options = {
+					transparent = true,
+				},
 			})
 			ColorMyPencils()
 		end,

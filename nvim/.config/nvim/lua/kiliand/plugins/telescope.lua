@@ -24,26 +24,35 @@ return {
 				},
 			},
 			pickers = {
-				-- theme = "ivy",
-				-- find_files = {
-				-- 	theme = "ivy",
-				-- },
-				-- lsp_references = {
-				-- 	theme = "ivy",
-				-- },
-				-- lsp_document_symbols = {
-				-- 	theme = "ivy",
-				-- },
-				-- lsp_incoming_calls = {
-				-- 	theme = "ivy",
-				-- },
-				-- live_grep = {
-				-- 	theme = "ivy",
-				-- },
-				-- grep_string = {
-				-- 	theme = "ivy",
-				-- },
+				lsp_document_symbols = {
+					symbol_width = 75,
+				},
 			},
+			extensions = {
+				fzf = {},
+			},
+			-- pickers = {
+			-- 	theme = "ivy",
+			-- 	find_files = {
+			-- 		theme = "ivy",
+			-- 	},
+			-- 	lsp_references = {
+			-- 		theme = "ivy",
+			-- 	},
+			-- 	lsp_document_symbols = {
+			-- 		symbol_width = 75,
+			-- 		theme = "ivy",
+			-- 	},
+			-- 	lsp_incoming_calls = {
+			-- 		theme = "ivy",
+			-- 	},
+			-- 	live_grep = {
+			-- 		theme = "ivy",
+			-- 	},
+			-- 	grep_string = {
+			-- 		theme = "ivy",
+			-- 	},
+			-- },
 		})
 
 		telescope.load_extension("fzf")
@@ -62,15 +71,13 @@ return {
 			})
 		end, { noremap = true, silent = true })
 		keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-		keymap.set("n", "<leader>fh", function()
-			require("telescope").extensions.live_grep_args.live_grep_args()
-		end)
 		keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
 		keymap.set("n", "<leader>fb", "<cmd>Telescope lsp_incoming_calls<cr>", { desc = "List all incoming calls" })
 		keymap.set("n", "<leader>fp", "<cmd>Telescope find_files<cr>", { desc = "List all incoming calls" })
 		keymap.set("n", "<leader>fw", function()
 			require("telescope.builtin").lsp_document_symbols({
 				desc = "List all documents symbols",
+				fname_width = 200,
 			})
 		end)
 		keymap.set("n", "<leader>fp", function()
@@ -96,6 +103,14 @@ return {
 				search_dirs = { "/Users/kiliandemeulemeester/Library/Mobile Documents/iCloud~md~obsidian/" },
 				find_command = { "find", ".", "-type", "f", "-name", "*.md" },
 				desc = { "Open vault file" },
+			})
+		end, { noremap = true, silent = true })
+
+		keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Find help tags" })
+
+		keymap.set("n", "<leader>en", function()
+			require("telescope.builtin").find_files({
+				cwd = vim.fn.stdpath("config"),
 			})
 		end, { noremap = true, silent = true })
 	end,

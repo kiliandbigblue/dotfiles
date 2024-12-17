@@ -1,5 +1,5 @@
 return {
-	"echasnovski/mini.ai",
+	"echasnovski/mini.nvim",
 	event = "VeryLazy",
 	dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
 	opts = function()
@@ -11,10 +11,11 @@ return {
 					a = { "@conditional.outer", "@loop.outer" },
 					i = { "@conditional.inner", "@loop.inner" },
 				}),
+				c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
 			},
 		}
 	end,
 	config = function(_, opts)
-		require("mini.ai").setup(opts)
+		-- require("mini.ai").setup(opts)
 	end,
 }

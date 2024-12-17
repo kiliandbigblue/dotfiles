@@ -1,6 +1,7 @@
 return {
 	"tpope/vim-projectionist",
 	config = function()
+		vim.g.projectionist_ignore_term = 1
 		vim.g.projectionist_heuristics = {
 			["*"] = {
 				["*_test.go"] = {
