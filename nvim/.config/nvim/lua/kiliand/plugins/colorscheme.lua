@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-	vim.cmd.colorscheme("rose-pine-moon")
+	vim.cmd.colorscheme("tokyonight")
 	vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
 
 	-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -8,7 +8,7 @@ function ColorMyPencils(color)
 	-- vim.api.nvim_set_hl(0, "VisualFloat", { bg = "#275378" })
 	-- --
 	-- Set the line number color to gold from rose-pine theme
-	vim.api.nvim_set_hl(0, "LineNr", { fg = "#D4A6A6" }) -- gold color from rose-pine theme
+	-- vim.api.nvim_set_hl(0, "LineNr", { fg = "#D4A6A6" }) -- gold color from rose-pine theme
 end
 
 return {

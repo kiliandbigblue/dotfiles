@@ -42,6 +42,8 @@ vim.keymap.set("n", "]d", "dzz")
 vim.keymap.set("n", "[q", ":cprevious<CR>zz")
 vim.keymap.set("n", "]q", ":cnext<CR>zz")
 
+vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>")
+
 function RpcToGoFunc()
 	-- Get the current line under the cursor
 	local rpc_line = vim.fn.getline(".")
@@ -75,3 +77,11 @@ function GithubPR()
 	vim.fn.system("gh pr view --web")
 end
 vim.api.nvim_create_user_command("GithubPR", GithubPR, {})
+
+vim.api.nvim_create_autocmd("TermOpen", {
+	group = vim.api.nvim_create_augroup("custom-term-open", { clear = true }),
+	callback = function()
+		vim.opt.number = false
+		vim.opt.relativenumber = false
+	end,
+})
