@@ -1,101 +1,58 @@
-local M = {}
+vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
 
--- Configuration options with defaults
-M.config = {
-	height = 0.8, -- Height as a percentage of screen
-	width = 0.8, -- Width as a percentage of screen
-	border = "rounded", -- Border style
-	toggle_key = "<leader>te", -- Default toggle key
+local state = {
+	floating = {
+		buf = -1,
+		win = -1,
+	},
 }
 
--- State tracking for the terminal
-local terminal_buf = nil
-local terminal_win = nil
-local is_terminal_open = false
+local function create_floating_window(opts)
+	opts = opts or {}
+	local width = opts.width or math.floor(vim.o.columns * 0.8)
+	local height = opts.height or math.floor(vim.o.lines * 0.8)
 
--- Create a floating terminal window
-local function create_floating_terminal()
-	-- Close existing terminal if it exists
-	if terminal_win and vim.api.nvim_win_is_valid(terminal_win) then
-		vim.api.nvim_win_close(terminal_win, true)
-	end
-
-	if terminal_buf and vim.api.nvim_buf_is_valid(terminal_buf) then
-		vim.api.nvim_buf_delete(terminal_buf, { force = true })
-	end
-
-	-- Calculate width based on percentage
-	local width = math.floor(vim.o.columns * M.config.width)
-	local height = math.floor(vim.o.lines * M.config.height)
-
-	-- Calculate window position to center it
-	local row = math.floor((vim.o.lines - height) / 2)
+	-- Calculate the position to center the window
 	local col = math.floor((vim.o.columns - width) / 2)
+	local row = math.floor((vim.o.lines - height) / 2)
 
-	-- Create a new buffer
-	terminal_buf = vim.api.nvim_create_buf(false, true)
+	-- Create a buffer
+	local buf = nil
+	if vim.api.nvim_buf_is_valid(opts.buf) then
+		buf = opts.buf
+	else
+		buf = vim.api.nvim_create_buf(false, true) -- No file, scratch buffer
+	end
 
-	-- Create floating window
-	terminal_win = vim.api.nvim_open_win(terminal_buf, true, {
+	-- Define window configuration
+	local win_config = {
 		relative = "editor",
 		width = width,
 		height = height,
-		row = row,
 		col = col,
-		style = "minimal",
-		border = M.config.border,
-	})
+		row = row,
+		style = "minimal", -- No borders or extra UI elements
+		border = "rounded",
+	}
 
-	-- Start terminal in current working directory
-	vim.fn.termopen(vim.o.shell, {
-		cwd = vim.fn.getcwd(),
-		on_exit = function()
-			-- Ensure we clean up if the terminal window is still valid
-			if vim.api.nvim_win_is_valid(terminal_win) then
-				vim.api.nvim_win_close(terminal_win, true)
-			end
+	-- Create the floating window
+	local win = vim.api.nvim_open_win(buf, true, win_config)
 
-			-- Reset terminal state
-			terminal_win = nil
-			terminal_buf = nil
-			is_terminal_open = false
-		end,
-	})
-
-	-- Set buffer-local options for terminal
-	vim.api.nvim_buf_set_option(terminal_buf, "bufhidden", "wipe")
-
-	-- Enter terminal mode
-	vim.cmd("startinsert")
-
-	is_terminal_open = true
+	return { buf = buf, win = win }
 end
 
--- Toggle terminal visibility
-function M.toggle_terminal()
-	if is_terminal_open then
-		-- Close terminal if open
-		if terminal_win and vim.api.nvim_win_is_valid(terminal_win) then
-			vim.api.nvim_win_close(terminal_win, true)
+local toggle_terminal = function()
+	if not vim.api.nvim_win_is_valid(state.floating.win) then
+		state.floating = create_floating_window({ buf = state.floating.buf })
+		if vim.bo[state.floating.buf].buftype ~= "terminal" then
+			vim.cmd.terminal()
 		end
-
-		-- Reset state
-		terminal_win = nil
-		terminal_buf = nil
-		is_terminal_open = false
 	else
-		-- Show terminal
-		create_floating_terminal()
+		vim.api.nvim_win_hide(state.floating.win)
 	end
 end
 
--- Setup function to configure the module
-function M.setup(opts)
-	-- Merge user config with defaults
-	M.config = vim.tbl_deep_extend("force", M.config, opts or {})
-
-	-- Set up keymap to toggle terminal
-	vim.keymap.set("n", M.config.toggle_key, M.toggle_terminal, { noremap = true, silent = true })
-end
-
-return M
+-- Example usage:
+-- Create a floating window with default dimensions
+vim.api.nvim_create_user_command("Floaterminal", toggle_terminal, {})
+vim.keymap.set("n", "<leader>te", "<cmd>Floaterminal<cr>", { desc = "Toggle terminal" })
